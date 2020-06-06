@@ -7,15 +7,8 @@
 let moment = require('moment');
 
 module.exports = {
-    openForm: async function () {
-        document.getElementById("newTaskForm").style.display = "block";
-    },
 
-    closeForm: async function () {
-        document.getElementById("newTaskForm").style.display = "none";
-    },
-
-    createTask: async function (req, res) {
+    createTask: async function (req, res) {sa
         let token = req.param('token');
         let user = await UserSession.find({ where: { token: token } });
         user = user[0];
@@ -28,6 +21,14 @@ module.exports = {
             task: { foo: 'bar' }
         }).fetch();
         return res.ok();
+    },
+
+    deleteTask: async function (req, res) {
+        //todo
+    },
+
+    completeTask: async function (req, res) {
+        //todo
     }
 
 };

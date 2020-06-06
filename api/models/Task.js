@@ -1,5 +1,6 @@
 module.exports = {
     attributes: {
+        title: {type: 'string', required: true},
         userSessionID: { model: 'userSession' },  //identyfikator sesji użytkownika
         deadlineTime: { type: 'number', required: true },    //czas na ukończenie
         priority: { type: 'number', defaultsTo: 5 }, //priorytet
