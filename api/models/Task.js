@@ -5,6 +5,6 @@ module.exports = {
         priority: { type: 'number', defaultsTo: 5 }, //priorytet
         status: { type: 'number', defaultsTo: 0 },  //status
         finished: { type: 'boolean', defaultsTo: false },  //czy ukończone?
-        task: { type: 'json', required: true }  //faktyczne zadanie
+        task: { type: 'json', required: true }  //faktyczne zadanie - czemu nie string po prostu?
     }
-}
+} 
