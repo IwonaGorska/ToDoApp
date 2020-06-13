@@ -113,7 +113,10 @@
 
         function createTask() {
             let u = $("#userToken").val();
-            $.post('/createTask',{token: u})
+            let title = $("#form32").val();
+            let priority = $("#formPriority").val();
+            let content = $("#form8").val();
+            $.post('/createTask',{token: u, title: title, proirity: priority, content: content})
                 .done((data) => {
                     $(location).attr('href', '/?u=' + u)
                 })
@@ -158,7 +161,7 @@
                         <input type="checkbox">
                         <span class="checkmark"></span>
                     </label>
-                    <span class="title"><%= task %><span>
+                    <span class="title" style="font-weight: 600"><%= task.title %><span>
                     <button class="btn taskTrash"><i class="fa fa-trash"></i></button>
                 </li>
                 <% } %>
