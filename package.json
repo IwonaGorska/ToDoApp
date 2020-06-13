@@ -16,7 +16,8 @@
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
     "sails-mongo": "^1.2.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "uuidv4": "^6.1.0"
   },
   "devDependencies": {
     "eslint": "5.16.0"

@@ -1,6 +1,7 @@
 let $ = require('jquery');
 let {v4: uuidv4} = require('uuid')
 let userSessionController = require("./UserSessionController");
+//import { uuid } from 'uuidv4';
 
 
 module.exports = {
@@ -12,6 +13,9 @@ module.exports = {
         if (!token) {
             //wygeneruj token 
             token = uuidv4();
+            //token = uuid();
+            console.log("TOKEN = " + token);
+            //token = "qwertyuiop1234";
         }
         //pobierz dane dla tokena
         let data = await userSessionController.getByToken(req, res);
