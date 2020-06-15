@@ -9,7 +9,9 @@
  * https://sailsjs.com/config/bootstrap
  */
 
-module.exports.bootstrap = async function() {
+const UserSession = require("../api/models/UserSession");
+
+module.exports.bootstrap = async function () {
 
   // By convention, this is a good place to set up fake data during development.
   //
@@ -27,4 +29,8 @@ module.exports.bootstrap = async function() {
   // ]);
   // ```
 
+  UserSession.native(function (err, collection) {
+    collection.createIndex({killTime: 1},{expireAfterSeconds: 1 /**automatycznie usuwaj rekordy 1 sekunde po minięciu killtime */});
+    done();
+  })
 };
