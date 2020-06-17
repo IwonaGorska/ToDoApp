@@ -13,9 +13,8 @@ module.exports = {
         if (!token) {
             //wygeneruj token 
             token = uuidv4();
-            //token = uuid();
-            console.log("TOKEN = " + token);
-            //token = "qwertyuiop1234";
+            //przekieruj ponownie do strony głównej tym razem z nowym tokenem w queryparamsach
+            return res.redirect('/?u='+token);
         }
         //pobierz dane dla tokena
         let data = await userSessionController.getByToken(req, res);
