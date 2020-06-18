@@ -115,16 +115,44 @@
             let u = $("#userToken").val();
             let title = $("#form32").val();
             let priority = $("#formPriority").val();
-            let content = $("#form8").val();
-            $.post('/createTask',{token: u, title: title, proirity: priority, content: content})
+            let deadline = $("#formDeadline").val();
+            let type = $("#formType").val();
+            let content;
+            switch(type){
+                case "1":{
+                    content = $("#form8").val();
+                    break;
+                }
+                case "2":{
+                    content = $("#form9").val();
+                    break;
+                }
+            }
+            $.post('/createTask',{token: u, title: title, priority: priority, type:type, deadline:deadline, content: content})
                 .done((data) => {
                     $(location).attr('href', '/?u=' + u)
                 })
         }
 
-        $(function () {
-            $('#datetimepicker1').datetimepicker();
-        });
+        function changeTaskType() {
+            let type = $("#formType").val();
+            switch(type){
+                case "1":{
+                    $("#formTaskStandard").css("visibility","visible")
+                    $("#formTaskStandard").css("height","initial")
+                    $("#formTaskChecklist").css("visibility","hidden")
+                    $("#formTaskChecklist").css("height","0px")
+                    break;
+                }
+                case "2":{
+                    $("#formTaskStandard").css("visibility","hidden")
+                    $("#formTaskStandard").css("height","0px")
+                    $("#formTaskChecklist").css("visibility","visible")
+                    $("#formTaskChecklist").css("height","initial")
+                    break;
+                }
+            }
+        }
         
     </script>
 </head>
@@ -135,7 +163,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" style="height:50px">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">#ToDo v0.0.3</a>
+                <a class="navbar-brand" href="#">#ToDo v0.0.4</a>
             </div>
             <form class="form-inline" style="margin-top:10px;float: right;">
                 <input type="text" class="form-control mb-2 mr-sm-2" style="width:500px" id="userToken"
@@ -156,12 +184,35 @@
             <div class="list-group" id="tasks">
 
                 <% for(let task of data.data) { %>
+                    <!-- Rysowanie zadań -->
                 <li class="list-group-item" style="padding-bottom: 20px;">
                     <label class="container2">
-                        <input type="checkbox">
+                        <% if(task.finished) { %>
+                            <input type="checkbox" checked>
+                        <% } else { %>
+                            <input type="checkbox">
+                        <% } %>
                         <span class="checkmark"></span>
                     </label>
                     <span class="title" style="font-weight: 600"><%= task.title %><span>
+                    <% if(task.task.type === "1") { %>
+                        <span><%= task.task.content %></span>
+                    <% } else { %>
+                        <div>
+                            <% for(let subtask of task.task.content) { %>
+                                <label class="container2">
+                                    <% if(subtask.finished) { %>
+                                        <input type="checkbox" checked>
+                                    <% } else { %>
+                                        <input type="checkbox">
+                                    <% } %>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <span class="title"><%= subtask.content %></span>
+
+                            <% } %>
+                        </div>
+                    <% } %>
                     <button class="btn taskTrash"><i class="fa fa-trash"></i></button>
                 </li>
                 <% } %>
@@ -171,7 +222,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header text-center">
-                                <h4 class="modal-title w-100 font-weight-bold">Nowe zadanie</h4>
+                                <h4 class="modal-title w-100 font-weight-bold">Zadanie</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -188,11 +239,11 @@
                                     <i class="fa fa-exclamation"></i>
                                     <label data-error="wrong" data-success="right" for="formPriority">Priorytet</label>
                                     <select class="form-control" id="formPriority">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected="selected">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
                                       </select>
                                 </div>
 
@@ -200,23 +251,31 @@
                                     <div class='input-group date' id='datetimepicker1'>
                                         <i class="fa fa-calendar-plus-o"></i>
                                         <label>Termin</label>
-                                        <input type='text' class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                                        <input type='date' class="form-control" id="formDeadline"/>
                                     </div>
                                 </div>
-                                <!--script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker1').datetimepicker();
-                                    });
-                                </script-->
 
-                                <div class="md-form">
+                                <div class="md-form mb-5 formElement">
+                                    <i class="fa fa-cog"></i>
+                                    <label data-error="wrong" data-success="right" for="formType">Typ</label>
+                                    <select class="form-control" id="formType" onchange="changeTaskType()">
+                                        <option value="1" selected="selected">Proste zadanie</option>
+                                        <option value="2">Checklista</option>
+                                      </select>
+                                </div><br>
+
+                                <div class="md-form" id="formTaskStandard">
                                     <i class="fa fa-edit"></i>
                                     <label data-error="wrong" data-success="right" for="form8">Treść zadania</label>
                                     <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
                                 </div>
+
+                                <div class="md-form" id="formTaskChecklist" style="visibility: hidden; height: 0px">
+                                    <i class="fa fa-edit"></i>
+                                    <label data-error="wrong" data-success="right" for="form9">Checklista</label>
+                                    <textarea type="text" id="form9" class="md-textarea form-control" rows="4"></textarea>
+                                </div>
+                                
 
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
