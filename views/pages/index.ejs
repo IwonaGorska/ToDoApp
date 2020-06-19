@@ -4,88 +4,108 @@
     <style>
         /* The container */
         .container2 {
-          display: block;
-          position: relative;
-          padding-left: 35px;
-          margin-bottom: 12px;
-          cursor: pointer;
-          font-size: 22px;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        }
-        
-        /* Hide the browser's default checkbox */
-        .container2 input {
-          position: absolute;
-          opacity: 0;
-          cursor: pointer;
-          height: 0;
-          width: 0;
-        }
-        
-        /* Create a custom checkbox */
-        .checkmark {
-          position: absolute;
-          top: 10px;
-          left: 0;
-          height: 25px;
-          width: 25px;
-          background-color: #eee;
-          border-color: #245580 !important;
-        }
-        
-        /* On mouse-over, add a grey background color */
-        .container2:hover input ~ .checkmark {
-          background-color: #ccc;
-        }
-        
-        /* When the checkbox is checked, add a blue background */
-        .container2 input:checked ~ .checkmark {
-          background-color: #245580;
-        }
-        
-        /* Create the checkmark/indicator (hidden when not checked) */
-        .checkmark:after {
-          content: "";
-          position: absolute;
-          display: none;
-        }
-        
-        /* Show the checkmark when checked */
-        .container2 input:checked ~ .checkmark:after {
-          display: block;
-        }
-        
-        /* Style the checkmark/indicator */
-        .container2 .checkmark:after {
-          left: 9px;
-          top: 5px;
-          width: 5px;
-          height: 10px;
-          border: solid white;
-          border-width: 0 3px 3px 0;
-          -webkit-transform: rotate(45deg);
-          -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        .title{
+        /* Hide the browser's default checkbox */
+        .container2 input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-color: #245580 !important;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container2:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container2 input:checked~.checkmark {
+            background-color: #245580;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container2 input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container2 .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .title {
             margin-left: 30px;
         }
 
-        .taskTrash{
-            float: right; 
+        .taskTrash {
+            float: right;
             border-color: #245580 !important;
-            margin-top: -10px;;
+            margin-top: -10px;
+            margin-left: 10px;
         }
 
-        .formElement{
+        .formElement {
             margin-top: 15px;
         }
 
-        </style>
+        .priority1 {
+            background-color: #c7ffcb !important;
+        }
+
+        .priority2 {
+            background-color: #8e9efa !important;
+        }
+
+        .priority3 {
+            background-color: #ffffff !important;
+        }
+
+        .priority4 {
+            background-color: #f9ffc7 !important;
+        }
+
+        .priority5 {
+            background-color: #f5b3b3 !important;
+        }
+    </style>
     <!--style>form-popup {display: none; border: 3px solid #f1f1f1; z-index: 9;} form-container {max-width: 300px; padding: 10px; background-color: white;}
      form-container btn {background-color: #4CAF50; color: white; padding: 16px 20px; border: none; cursor: pointer; width: 100%; margin-bottom:10px;  opacity: 0.8;}</style-->
     <!-- JQuery -->
@@ -99,11 +119,10 @@
         integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!--fonr awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- Latest compiled and minified JavaScript -->
+    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-    <script src="/assets/js/jQuery.js"></script>
     <script type="text/javascript">
 
         function reloadToken() {
@@ -118,17 +137,44 @@
             let deadline = $("#formDeadline").val();
             let type = $("#formType").val();
             let content;
-            switch(type){
-                case "1":{
+            switch (type) {
+                case "1": {
                     content = $("#form8").val();
                     break;
                 }
-                case "2":{
+                case "2": {
                     content = $("#form9").val();
                     break;
                 }
             }
-            $.post('/createTask',{token: u, title: title, priority: priority, type:type, deadline:deadline, content: content})
+            $.post('/createTask', { token: u, title: title, priority: priority, type: type, deadline: deadline, content: content })
+                .done((data) => {
+                    $(location).attr('href', '/?u=' + u)
+                })
+        }
+
+        function destroyTask(task) {
+            let u = $("#userToken").val();
+            $.post('/destroyTask', { taskID: task })
+                .done((data) => {
+                    $(location).attr('href', '/?u=' + u)
+                })
+        }
+
+        function completeTask(task) {
+            let u = $("#userToken").val();
+            let complete = $("#taskCheckbox" + task).is(":checked");
+
+            $.post('/completeTask', { taskID: task, complete: complete })
+                .done((data) => {
+                    $(location).attr('href', '/?u=' + u)
+                })
+        }
+
+        function completeSubTask(task, subIndex) {
+            let u = $("#userToken").val();
+            let complete = $("#subCheckbox" + task + "_" + subIndex).is(":checked");
+            $.post('/completeChecklistTask', { taskID: task, subIndex: subIndex, complete: complete })
                 .done((data) => {
                     $(location).attr('href', '/?u=' + u)
                 })
@@ -136,24 +182,24 @@
 
         function changeTaskType() {
             let type = $("#formType").val();
-            switch(type){
-                case "1":{
-                    $("#formTaskStandard").css("visibility","visible")
-                    $("#formTaskStandard").css("height","initial")
-                    $("#formTaskChecklist").css("visibility","hidden")
-                    $("#formTaskChecklist").css("height","0px")
+            switch (type) {
+                case "1": {
+                    $("#formTaskStandard").css("visibility", "visible")
+                    $("#formTaskStandard").css("height", "initial")
+                    $("#formTaskChecklist").css("visibility", "hidden")
+                    $("#formTaskChecklist").css("height", "0px")
                     break;
                 }
-                case "2":{
-                    $("#formTaskStandard").css("visibility","hidden")
-                    $("#formTaskStandard").css("height","0px")
-                    $("#formTaskChecklist").css("visibility","visible")
-                    $("#formTaskChecklist").css("height","initial")
+                case "2": {
+                    $("#formTaskStandard").css("visibility", "hidden")
+                    $("#formTaskStandard").css("height", "0px")
+                    $("#formTaskChecklist").css("visibility", "visible")
+                    $("#formTaskChecklist").css("height", "initial")
                     break;
                 }
             }
         }
-        
+
     </script>
 </head>
 
@@ -175,48 +221,61 @@
 
     <main role="main" class="container" style="margin-top:70px">
         <!--tutaj faktyczna aplikacja, single-page, jakiś modal do dodawania zadań-->
-
         <div class="text-left">
-            <a href="" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modalForm" style="margin: 15px;">Dodaj zadanie</a>
+            <a href="" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modalForm"
+                style="margin: 15px;">Dodaj zadanie</a>
         </div>
 
         <div class="container">
             <div class="list-group" id="tasks">
 
                 <% for(let task of data.data) { %>
-                    <!-- Rysowanie zadań -->
-                <li class="list-group-item" style="padding-bottom: 20px;">
+                <!-- Rysowanie zadań -->
+                <li class="list-group-item priority<%= task.priority %>" style="padding-bottom: 20px;">
                     <label class="container2">
                         <% if(task.finished) { %>
-                            <input type="checkbox" checked>
+                        <input type="checkbox" id="taskCheckbox<%= task.id %>" onchange="completeTask('<%= task.id %>')"
+                            checked>
                         <% } else { %>
-                            <input type="checkbox">
+                        <input type="checkbox" id="taskCheckbox<%= task.id %>"
+                            onchange="completeTask('<%= task.id %>')">
                         <% } %>
                         <span class="checkmark"></span>
                     </label>
-                    <span class="title" style="font-weight: 600"><%= task.title %><span>
+                    <button class="btn taskTrash" onclick="destroyTask('<%= task.id %>')"><i
+                            class="fa fa-trash"></i></button>
+                    <!-- <button class="btn taskTrash"><i class="fa fa-edit"></i></button> -->
+                    <span class="title" style="font-weight: 600"><%= task.title %></span>
+                    <span>Do końca pozostało:
+                        <%= Math.ceil((new Date(task.deadlineTime) - new Date()) / (1000 * 60 * 60 * 24)) %> dni</span>
                     <% if(task.task.type === "1") { %>
-                        <span><%= task.task.content %></span>
+                    <div style="margin-left: 25px;">
+                        </br>
+                        <%= task.task.content %>
+                    </div>
                     <% } else { %>
-                        <div>
-                            <% for(let subtask of task.task.content) { %>
-                                <label class="container2">
-                                    <% if(subtask.finished) { %>
-                                        <input type="checkbox" checked>
-                                    <% } else { %>
-                                        <input type="checkbox">
-                                    <% } %>
-                                    <span class="checkmark"></span>
-                                </label>
-                                <span class="title"><%= subtask.content %></span>
-
+                    <div style="margin-left: 25px;">
+                        </br>
+                        <% for(let [index, subtask] of task.task.content.entries()) { %>
+                        <label class="container2">
+                            <% if(subtask.finished) { %>
+                            <input type="checkbox" id="subCheckbox<%= task.id %>_<%= index %>"
+                                onchange="completeSubTask('<%= task.id %>','<%= index %>')" checked>
+                            <% } else { %>
+                            <input type="checkbox" id="subCheckbox<%= task.id %>_<%= index %>"
+                                onchange="completeSubTask('<%= task.id %>','<%= index %>')">
                             <% } %>
-                        </div>
+                            <span class="checkmark"></span>
+                        </label>
+                        <span class="title"><%= subtask.content %></span>
+
+                        <% } %>
+                    </div>
                     <% } %>
-                    <button class="btn taskTrash"><i class="fa fa-trash"></i></button>
+
                 </li>
                 <% } %>
-              
+
                 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -244,14 +303,14 @@
                                         <option value="3" selected="selected">3</option>
                                         <option value="4">4</option>
                                         <option value="5">5</option>
-                                      </select>
+                                    </select>
                                 </div>
 
                                 <div class="form-group formElement">
                                     <div class='input-group date' id='datetimepicker1'>
                                         <i class="fa fa-calendar-plus-o"></i>
                                         <label>Termin</label>
-                                        <input type='date' class="form-control" id="formDeadline"/>
+                                        <input type='date' class="form-control" id="formDeadline" />
                                     </div>
                                 </div>
 
@@ -261,31 +320,34 @@
                                     <select class="form-control" id="formType" onchange="changeTaskType()">
                                         <option value="1" selected="selected">Proste zadanie</option>
                                         <option value="2">Checklista</option>
-                                      </select>
+                                    </select>
                                 </div><br>
 
                                 <div class="md-form" id="formTaskStandard">
                                     <i class="fa fa-edit"></i>
                                     <label data-error="wrong" data-success="right" for="form8">Treść zadania</label>
-                                    <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                                    <textarea type="text" id="form8" class="md-textarea form-control"
+                                        rows="4"></textarea>
                                 </div>
 
                                 <div class="md-form" id="formTaskChecklist" style="visibility: hidden; height: 0px">
                                     <i class="fa fa-edit"></i>
                                     <label data-error="wrong" data-success="right" for="form9">Checklista</label>
-                                    <textarea type="text" id="form9" class="md-textarea form-control" rows="4"></textarea>
+                                    <textarea type="text" id="form9" class="md-textarea form-control"
+                                        rows="4"></textarea>
                                 </div>
-                                
+
 
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
-                                <button class="btn btn-primary mb-2" onclick="createTask()">Zatwierdź <i class="fa fa-check"></i></button>
+                                <button class="btn btn-primary mb-2" onclick="createTask()">Zatwierdź <i
+                                        class="fa fa-check"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-        </div>
+            </div>
     </main>
 
 </body>
