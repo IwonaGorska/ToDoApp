@@ -124,6 +124,11 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script type="text/javascript">
+        $(document).ready(async () => {
+            let imageUrl = "<%= data.image %>";
+            var image = document.getElementById('output');
+            image.src = imageUrl;
+        })
 
         function reloadToken() {
             let u = $("#userToken").val();
@@ -180,9 +185,12 @@
                 })
         }
 
-        var loadFile = function(event) {
+        var loadFile = async function(event) {
             var image = document.getElementById('output');
+            console.error(event.target.files[0]);
             image.src = URL.createObjectURL(event.target.files[0]);
+            console.error('send im',image.src)
+
             let u = $("#userToken").val();
             
             $.post('/loadFile', { token: u, image: image.src })
@@ -226,7 +234,7 @@
             <form class="form-inline" style="margin-top:10px;float: right;">
                 <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;">
                 <label for="file" style="cursor: pointer; color: #9d9d9d;">Zmień avatar</label>
-                <img id="output" height="30" />
+                <img id="output" height="30"/>
                 <input type="text" class="form-control mb-2 mr-sm-2" style="width:350px" id="userToken"
                     value="<%= token %>">
                 <button type="button" onclick="reloadToken()" class="btn btn-primary mb-2">Załaduj</button>

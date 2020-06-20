@@ -21,7 +21,7 @@ module.exports = {
         let data = await userSessionController.getByToken(req, res);
         return res.view('pages/index', {
             token: token,
-            data: data
+            data: data,
         })
 
         // else {

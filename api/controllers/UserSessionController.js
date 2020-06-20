@@ -5,7 +5,6 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 let moment = require('moment');
-const UserSession = require('../models/UserSession');
 
 module.exports = {
 
@@ -16,9 +15,10 @@ module.exports = {
         user = user[0];*/
         
         let image = req.param('image');
-        await UserSession.update({token:token}).set({image:image});
-        console.log("test " + UserSession.image);
+        let us = await UserSession.update({token:token}).set({image:image}).fetch();
+        console.log("test ", us[0].image);
         
+        return res.ok();
     },
 
     getByToken: async function (req, res) {
@@ -27,14 +27,14 @@ module.exports = {
         if (!record[0]) {
             //jeśli nie istnieje to musimy go utworzyć i zwrócić pustą tablicę tasków
             let newRecord = await UserSession.create({ token: token, killTime: moment().add(1, 'months').toDate().getTime() }).fetch();
-            return { data: [] }//res.json({data: []});
+            return { data: [], image: null }
         }
         else {
             //jeśli istnieje to musimy zupdatować killTime i zwrócić tablicę zadań
             let updatedRecord = await UserSession.update({ where: { token: token } }).set({ killTime: moment().add(1, 'months').toDate().getTime() }).fetch();
             let tmp = [...record[0].tasks];
             tmp.sort((a, b) => b.priority - a.priority)
-            return { data: tmp }//res.json({data: record[0].tasks})
+            return { data: tmp, image: record[0].image }
         }
     }
 };
