@@ -7,6 +7,19 @@
 let moment = require('moment');
 
 module.exports = {
+
+    loadFile: async function (req, res) {
+        //sa
+        let token = req.param('token');
+        /*let user = await UserSession.find({ where: { token: token } });
+        user = user[0];*/
+        
+        let image = req.param('image');
+        await UserSession.update({token:token}).set({image:image});
+
+        
+    },
+    
     getByToken: async function (req, res) {
         let token = req.param('u');
         let record = await UserSession.find({ where: { token: token } }).populate('tasks');
