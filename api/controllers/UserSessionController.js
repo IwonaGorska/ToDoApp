@@ -16,7 +16,6 @@ module.exports = {
         
         let image = req.param('image');
         let us = await UserSession.update({token:token}).set({image:image}).fetch();
-        console.log("test ", us[0].image);
         
         return res.ok();
     },
