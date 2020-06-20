@@ -180,6 +180,17 @@
                 })
         }
 
+        var loadFile = function(event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            let u = $("#userToken").val();
+            
+            $.post('/loadFile', { token: u, image: image.src })
+                .done((data) => {
+                    $(location).attr('href', '/?u=' + u)
+                })
+        };
+
         function changeTaskType() {
             let type = $("#formType").val();
             switch (type) {
@@ -210,11 +221,16 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">#ToDo v0.0.4</a>
+                
             </div>
             <form class="form-inline" style="margin-top:10px;float: right;">
+                <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;">
+                <label for="file" style="cursor: pointer; color: #9d9d9d;">Zmień avatar</label>
+                <img id="output" height="30" />
                 <input type="text" class="form-control mb-2 mr-sm-2" style="width:500px" id="userToken"
                     value="<%= token %>">
                 <button type="button" onclick="reloadToken()" class="btn btn-primary mb-2">Załaduj</button>
+                
             </form>
         </div>
     </nav>
