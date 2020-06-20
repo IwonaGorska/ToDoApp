@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 let moment = require('moment');
+const UserSession = require('../models/UserSession');
 
 module.exports = {
 
@@ -16,10 +17,10 @@ module.exports = {
         
         let image = req.param('image');
         await UserSession.update({token:token}).set({image:image});
-
+        console.log("test " + UserSession.image);
         
     },
-    
+
     getByToken: async function (req, res) {
         let token = req.param('u');
         let record = await UserSession.find({ where: { token: token } }).populate('tasks');

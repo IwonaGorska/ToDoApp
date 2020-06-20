@@ -8,7 +8,7 @@ module.exports = {
             collection: 'task',
             via: 'userSessionID'
         },
-        image: {type: ref}
+        image: {type: 'ref'}
     },
 
     beforeDestroy: function (destroyedRecords, cb) {

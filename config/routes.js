@@ -38,5 +38,5 @@ module.exports.routes = {
   'post /destroyTask': 'TaskController.deleteTask',
   'post /completeTask': 'TaskController.completeTask',
   'post /completeChecklistTask': 'TaskController.completeChecklistTask',
-  'post /loadTask': 'UserSessionController.loadTask',
+  'post /loadFile': 'UserSessionController.loadFile',
 };
