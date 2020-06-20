@@ -6,17 +6,6 @@ let userSessionController = require("./UserSessionController");
 
 module.exports = {
 
-    loadFile: async function (req, res) {
-        //sa
-        let token = req.param('token');
-        let user = await UserSession.find({ where: { token: token } });
-        user = user[0];
-        
-        let image = req.param('image');
-
-        return res.ok();
-    },
-
     main: async function (req, res) {
 
         // var urlParams = new URLSearchParams(window.location.search);
