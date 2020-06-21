@@ -23,26 +23,70 @@ module.exports = {
             task: { foo: 'bar' }
         }).fetch();*/
 
+        let title = req.param('title');
+        let deadline = req.param('deadline');
+        let priority = req.param('priority');
+        let type = req.param('type');
+        let content;
+        switch (type) {
+            case '1': {  //proste zadanie
+                content = req.param('content')
+                break;
+            }
+            case '2': {  //checklista
+                let split = req.param('content').split("\n");
+                let checklist = [];
+                for (let subtask of split) {
+                    checklist.push({
+                        content: subtask,
+                        finished: false
+                    })
+                }
+                content = checklist;
+                break;
+            }
+        }
+
         let newRecord = await Task.create({
-            title: req.param('title'),
+            title: title,
             userSessionID: user.id,
-            deadlineTime: moment().add(1, 'weeks').toDate().getTime(), //w przyszlosci chyba pobrane od usera
-            priority: req.param('priority'),
-            status: 0,
+            deadlineTime: new Date(deadline).getTime(),
+            type: type,
+            priority: priority,
             finished: false,
-            task: req.param('content')
+            task: {
+                type: type,
+                content: content
+            }
         }).fetch();
 
         return res.ok();
     },
 
     deleteTask: async function (req, res) {
-        //todo
+        let id = req.param("taskID");
+        await Task.destroy({ id: id });
+        return res.ok();
+
     },
 
     completeTask: async function (req, res) {
-        //todo
-    }
+        let id = req.param("taskID");
+        let completed = req.param("complete");
+        await Task.update({ id: id }).set({ finished: completed })
+        return res.ok();
+    },
+
+    completeChecklistTask: async function (req, res) {
+        let id = req.param("taskID");
+        let subtaskIndex = req.param("subIndex");
+        let completed = req.param("complete");
+        let mainTask = await Task.find({ where: { id: id } })
+        mainTask = mainTask[0];
+        mainTask.task.content[subtaskIndex].finished = completed;
+        await Task.update({ id: id }).set({ task: mainTask.task });
+        return res.ok();
+    },
 
 };
 

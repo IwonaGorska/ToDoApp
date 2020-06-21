@@ -35,5 +35,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   'post /createTask': 'TaskController.createTask',
-
+  'post /destroyTask': 'TaskController.deleteTask',
+  'post /completeTask': 'TaskController.completeTask',
+  'post /completeChecklistTask': 'TaskController.completeChecklistTask',
+  'post /loadFile': 'UserSessionController.loadFile',
 };

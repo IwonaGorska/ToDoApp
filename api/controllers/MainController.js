@@ -1,11 +1,12 @@
 let $ = require('jquery');
-let {v4: uuidv4} = require('uuid')
+let { v4: uuidv4 } = require('uuid')
 let userSessionController = require("./UserSessionController");
 //import { uuid } from 'uuidv4';
 
 
 module.exports = {
-    main: async function(req, res){
+
+    main: async function (req, res) {
 
         // var urlParams = new URLSearchParams(window.location.search);
         // let token = urlParams.get('u');
@@ -13,15 +14,14 @@ module.exports = {
         if (!token) {
             //wygeneruj token 
             token = uuidv4();
-            //token = uuid();
-            console.log("TOKEN = " + token);
-            //token = "qwertyuiop1234";
+            //przekieruj ponownie do strony głównej tym razem z nowym tokenem w queryparamsach
+            return res.redirect('/?u=' + token);
         }
         //pobierz dane dla tokena
         let data = await userSessionController.getByToken(req, res);
-        return res.view('pages/index',{
+        return res.view('pages/index', {
             token: token,
-            data: data
+            data: data,
         })
 
         // else {
